@@ -248,16 +248,16 @@ export default function Admin() {
           <div className="table-scroll">
             <table>
               <thead>
-                <tr><th>When</th><th>Name</th><th>Scenario</th><th>Voice</th><th>Location</th><th>Duration</th></tr>
+                <tr><th>When</th><th>Name</th><th>Email</th><th>Phone</th><th>Scenario</th><th>Duration</th></tr>
               </thead>
               <tbody>
                 {usage?.records?.length ? usage.records.map((r) => (
                   <tr key={r.id}>
                     <td>{new Date(r.started_at).toLocaleString()}</td>
                     <td>{r.name}</td>
+                    <td>{r.email || "—"}</td>
+                    <td>{r.phone || "—"}</td>
                     <td>{r.scenario || "Default"}</td>
-                    <td>{r.voice}</td>
-                    <td>{r.location?.lat != null ? `${r.location.lat}, ${r.location.lon}` : (r.location?.denied ? "denied" : "—")}</td>
                     <td>{fmtDuration(r.duration_seconds)}</td>
                   </tr>
                 )) : (

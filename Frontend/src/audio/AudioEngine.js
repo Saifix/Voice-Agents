@@ -34,9 +34,11 @@ export class AudioEngine {
     this.active = false;
   }
 
-  async start({ name, location, scenarioId }) {
+  async start({ scenarioId, ...profile }) {
+    this._profile = profile;       // { name, email, phone, country_code }
+    this._scenarioId = scenarioId;
     await this._setupAudio();
-    this._connectWs({ name, location, scenarioId });
+    this._connectWs();
   }
 
   async _setupAudio() {
@@ -80,14 +82,14 @@ export class AudioEngine {
     this.h.onAnalysers?.(this.userAnalyser, this.agentAnalyser);
   }
 
-  _connectWs({ name, location, scenarioId }) {
+  _connectWs() {
     const proto = window.location.protocol === "https:" ? "wss" : "ws";
     const ws = new WebSocket(`${proto}://${window.location.host}/ws`);
     ws.binaryType = "arraybuffer";
     this.ws = ws;
 
     ws.onopen = () =>
-      ws.send(JSON.stringify({ type: "start", name, location, scenario_id: scenarioId }));
+      ws.send(JSON.stringify({ type: "start", ...this._profile, scenario_id: this._scenarioId }));
     ws.onmessage = (ev) => {
       if (typeof ev.data === "string") this._handleControl(JSON.parse(ev.data));
       else this._enqueueAudio(ev.data);

@@ -119,6 +119,11 @@ input[type=color] { padding: 6px; height: 46px; cursor: pointer; }
 .btn.danger { background: transparent; border: 1px solid var(--danger); color: var(--danger); box-shadow: none; }
 .btn.danger:hover { background: rgba(255, 107, 129, 0.12); }
 
+.phone-row { display: flex; gap: 10px; }
+.phone-row select { width: 120px; flex: none; }
+.phone-row input { flex: 1; }
+.field-err { color: var(--danger); font-size: 12px; margin-top: 7px; margin-left: 2px; }
+
 .loc-status { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-dim); margin-top: 10px; }
 .loc-status .pill { width: 8px; height: 8px; border-radius: 50%; background: var(--text-dim); transition: all .2s ease; }
 .loc-status.ok .pill { background: var(--accent-2); box-shadow: 0 0 10px var(--accent-2); }

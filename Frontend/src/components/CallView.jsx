@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Visualizer from "./Visualizer.jsx";
 import { AudioEngine } from "../audio/AudioEngine.js";
 
-export default function CallView({ name, location, scenario, onEnd }) {
+export default function CallView({ user, scenario, onEnd }) {
   const engineRef = useRef(null);
   const startedRef = useRef(false);   // guard against StrictMode double-mount
   const tickRef = useRef(null);
@@ -63,7 +63,7 @@ export default function CallView({ name, location, scenario, onEnd }) {
     });
     engineRef.current = engine;
 
-    engine.start({ name, location, scenarioId: scenario?.id }).catch((e) => {
+    engine.start({ ...user, scenarioId: scenario?.id }).catch((e) => {
       alert("Microphone access is required to talk to the assistant.\n\n" + e.message);
       onEnd();
     });

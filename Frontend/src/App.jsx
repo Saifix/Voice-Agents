@@ -6,7 +6,7 @@ import CallView from "./components/CallView.jsx";
 
 export default function App() {
   const [step, setStep] = useState("gate");   // gate | pick | call
-  const [user, setUser] = useState(null);      // { name, location }
+  const [user, setUser] = useState(null);      // { name, email, phone, country_code }
   const [scenario, setScenario] = useState(null);
   const [scenarios, setScenarios] = useState([]);
 
@@ -40,8 +40,7 @@ export default function App() {
 
       {step === "call" && (
         <CallView
-          name={user.name}
-          location={user.location}
+          user={user}
           scenario={scenario}
           onEnd={() => setStep("pick")}
         />

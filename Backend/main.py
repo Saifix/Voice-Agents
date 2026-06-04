@@ -334,7 +334,9 @@ async def ws_endpoint(ws: WebSocket):
     session_record = {
         "id": secrets.token_hex(8),
         "name": (first.get("name") or "Anonymous").strip()[:80],
-        "location": first.get("location") or {},
+        "email": (first.get("email") or "").strip()[:120],
+        "phone": (first.get("phone") or "").strip()[:40],
+        "country_code": (first.get("country_code") or "").strip()[:8],
         "model": settings["model"],
         "voice": voice,
         "scenario": scenario["name"] if scenario else "Default",
@@ -347,16 +349,35 @@ async def ws_endpoint(ws: WebSocket):
     client = genai.Client(http_options={"api_version": "v1beta"}, api_key=api_key)
     live_config = build_live_config(voice, system_instruction)
 
+    ready_msg = {
+        "type": "ready",
+        "model": settings["model"],
+        "voice": voice,
+        "scenario": scenario["name"] if scenario else "Default",
+        "name": session_record["name"],
+        "max_seconds": MAX_SESSION_SECONDS,
+    }
+    # Nudge the model to greet first. The client stays in "Connecting…" (mic
+    # held) until the first audio actually arrives — proof the agent is fully
+    # warmed up and responding — so the user never talks into a dead session.
+    greeting_trigger = (
+        "The call has just connected. Greet the user warmly in ONE short sentence, "
+        "in the language and style of your role, and invite them to speak."
+    )
+
     try:
         async with client.aio.live.connect(model=settings["model"], config=live_config) as session:
-            await ws.send_json({
-                "type": "ready",
-                "model": settings["model"],
-                "voice": voice,
-                "scenario": scenario["name"] if scenario else "Default",
-                "name": session_record["name"],
-                "max_seconds": MAX_SESSION_SECONDS,
-            })
+            ready_event = asyncio.Event()
+
+            await session.send_client_content(
+                turns=types.Content(role="user", parts=[types.Part(text=greeting_trigger)]),
+                turn_complete=True,
+            )
+
+            async def signal_ready():
+                if not ready_event.is_set():
+                    ready_event.set()
+                    await ws.send_json(ready_msg)
 
             async def browser_to_gemini():
                 while True:
@@ -391,13 +412,22 @@ async def ws_endpoint(ws: WebSocket):
                         if sc is not None and getattr(sc, "interrupted", False):
                             await ws.send_json({"type": "interrupted"})
                         if data := response.data:
+                            # First audio byte => the agent is truly ready.
+                            await signal_ready()
                             await ws.send_bytes(data)
                             continue
                         if text := response.text:
                             await ws.send_json({"type": "text", "text": text})
                     await ws.send_json({"type": "turn_complete"})
 
+            async def ready_fallback():
+                # Safety net: if no audio arrives within 12s, open the mic anyway.
+                await asyncio.sleep(12)
+                await signal_ready()
+
             async def enforce_time_limit():
+                # Start the clock only once the conversation is actually live.
+                await ready_event.wait()
                 await asyncio.sleep(MAX_SESSION_SECONDS)
                 try:
                     await ws.send_json({"type": "limit_reached"})
@@ -408,6 +438,7 @@ async def ws_endpoint(ws: WebSocket):
             async with asyncio.TaskGroup() as tg:
                 tg.create_task(browser_to_gemini())
                 tg.create_task(gemini_to_browser())
+                tg.create_task(ready_fallback())
                 tg.create_task(enforce_time_limit())
 
     except* WebSocketDisconnect:

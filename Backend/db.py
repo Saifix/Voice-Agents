@@ -17,7 +17,7 @@ import secrets
 
 from sqlalchemy import (
     create_engine, MetaData, Table, Column, String, Float, Text, DateTime,
-    select, insert, update, delete, func,
+    select, insert, update, delete, func, text,
 )
 from sqlalchemy.dialects.postgresql import JSONB
 
@@ -60,7 +60,9 @@ usage_records = Table(
     "usage_records", metadata,
     Column("id", String, primary_key=True),
     Column("name", String),
-    Column("location", JSONB),
+    Column("email", String),
+    Column("phone", String),
+    Column("country_code", String),
     Column("model", String),
     Column("voice", String),
     Column("scenario", String),
@@ -172,6 +174,11 @@ DEFAULT_SCENARIOS = [
 def init_db() -> None:
     """Create tables and seed defaults. Raises if the DB is unreachable."""
     metadata.create_all(engine)
+    # Lightweight migration: add columns that may be missing on an older DB
+    # (e.g. one created before email/phone replaced location).
+    with engine.begin() as conn:
+        for col in ("email", "phone", "country_code"):
+            conn.execute(text(f"ALTER TABLE usage_records ADD COLUMN IF NOT EXISTS {col} TEXT"))
     with engine.begin() as conn:
         has_settings = conn.execute(
             select(app_config.c.key).where(app_config.c.key == "settings")
