@@ -91,7 +91,8 @@ body::before {
 
 label.field { display: block; font-size: 11px; color: var(--text-dim); margin: 0 0 8px 2px; text-transform: uppercase; letter-spacing: .7px; }
 
-input[type=text], input[type=color], textarea, select {
+input[type=text], input[type=tel], input[type=email], input[type=number],
+input[type=password], input[type=color], textarea, select {
   width: 100%; background: var(--bg-1); border: 1px solid var(--border);
   color: var(--text); border-radius: 12px; padding: 13px 15px;
   font-size: 15px; font-family: var(--font); outline: none;
@@ -120,8 +121,8 @@ input[type=color] { padding: 6px; height: 46px; cursor: pointer; }
 .btn.danger:hover { background: rgba(255, 107, 129, 0.12); }
 
 .phone-row { display: flex; gap: 10px; }
-.phone-row select { width: 120px; flex: none; }
-.phone-row input { flex: 1; }
+.phone-row select { width: 130px; flex: none; padding-left: 12px; padding-right: 8px; }
+.phone-row input { flex: 1; min-width: 0; }
 .field-err { color: var(--danger); font-size: 12px; margin-top: 7px; margin-left: 2px; }
 
 .loc-status { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-dim); margin-top: 10px; }
