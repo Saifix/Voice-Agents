@@ -130,6 +130,27 @@ input[type=color] { padding: 6px; height: 46px; cursor: pointer; }
 .loc-status.ok .pill { background: var(--accent-2); box-shadow: 0 0 10px var(--accent-2); }
 .loc-status.err .pill { background: var(--danger); }
 
+/* ---------- homepage scenario showcase ---------- */
+.gate-wrap { display: flex; flex-direction: column; align-items: center; gap: 30px; width: 100%; padding: 20px 0; }
+.home-scenarios { width: min(720px, 92vw); animation: rise .6s cubic-bezier(.2,.85,.25,1) both; }
+.hs-title { text-align: center; font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px; }
+.hs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.hs-card {
+  display: flex; align-items: center; gap: 13px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 13px; padding: 14px 16px;
+  transition: border-color .2s ease, transform .2s ease;
+}
+.hs-card:hover { border-color: var(--card-accent, var(--accent)); transform: translateY(-2px); }
+.hs-emoji {
+  width: 40px; height: 40px; flex: none; border-radius: 11px; display: grid; place-items: center; font-size: 20px;
+  background: color-mix(in srgb, var(--card-accent, var(--accent)) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--card-accent, var(--accent)) 38%, transparent);
+}
+.hs-meta { min-width: 0; }
+.hs-name { font-size: 14px; font-weight: 600; }
+.hs-desc { font-size: 12px; color: var(--text-dim); line-height: 1.4; margin-top: 2px; }
+@media (max-width: 560px) { .hs-grid { grid-template-columns: 1fr; } }
+
 /* ---------- scenario picker ---------- */
 .picker { width: min(900px, 94vw); animation: rise .5s cubic-bezier(.2,.85,.25,1) both; }
 .picker-head { text-align: center; margin-bottom: 28px; }

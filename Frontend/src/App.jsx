@@ -26,6 +26,7 @@ export default function App() {
 
       {step === "gate" && (
         <Gate
+          scenarios={scenarios}
           onStart={(u) => { setUser(u); setStep("pick"); }}
         />
       )}

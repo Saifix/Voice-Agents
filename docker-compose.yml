@@ -1,14 +1,25 @@
+# Full stack: db (Postgres) + web (FastAPI app serving the React SPA) + caddy
+# (HTTPS reverse proxy). One command runs everything:
+#
+#   docker compose up -d --build
+#
+# Requires a .env next to this file:
+#   GEMINI_API_KEY=...                # injected as a Docker secret (not an env var)
+#   SITE_ADDRESS=your-domain.com      # used by Caddy for automatic HTTPS
+#
+# Local development (run backend/frontend on the host) only needs Postgres:
+#   docker compose up -d db           # exposes 127.0.0.1:5433
+
 services:
   db:
     image: postgres:16
-    container_name: voiceagent-db
     restart: unless-stopped
     environment:
       POSTGRES_USER: voiceagent
       POSTGRES_PASSWORD: voiceagent
       POSTGRES_DB: voiceagent
     ports:
-      - "5433:5432"   # host 5433 -> container 5432 (5432 may be used by other projects)
+      - "127.0.0.1:5433:5432"   # localhost-only; for host-based local dev
     volumes:
       - voiceagent_pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -21,29 +32,37 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: voiceagent-web
     restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
     environment:
-      # Inside the compose network the backend reaches Postgres at db:5432.
       DATABASE_URL: postgresql+psycopg2://voiceagent:voiceagent@db:5432/voiceagent
     secrets:
-      # The Gemini key is mounted as a read-only file at /run/secrets/gemini_api_key
-      # (NOT a container env var, so it won't show up in `docker inspect`).
       - gemini_api_key
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
 
-# The secret value is taken from GEMINI_API_KEY in the project-root .env at
-# `compose up` time and mounted into the container as a file — single source of
-# truth, no key baked into the image.
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - web
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
 secrets:
   gemini_api_key:
     environment: GEMINI_API_KEY
 
 volumes:
-  # Named volume — data survives `docker compose down` and `up`. It is ONLY
-  # removed by an explicit `docker compose down -v` (or `docker volume rm`).
-  voiceagent_pgdata:
+  voiceagent_pgdata:   # DB data — survives down/up; only removed by `down -v`
+  caddy_data:
+  caddy_config:

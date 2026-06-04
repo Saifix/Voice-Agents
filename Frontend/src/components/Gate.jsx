@@ -4,7 +4,7 @@ import { COUNTRIES } from "../countryCodes.js";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /* Name + email + phone (with country code) gate. All fields required. */
-export default function Gate({ onStart }) {
+export default function Gate({ onStart, scenarios = [] }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [iso, setIso] = useState("PK");
@@ -28,6 +28,7 @@ export default function Gate({ onStart }) {
 
   return (
     <main className="stage">
+     <div className="gate-wrap">
       <section className="card">
         <h1>Talk to your assistant</h1>
         <p className="sub">Enter your details to begin.</p>
@@ -65,6 +66,24 @@ export default function Gate({ onStart }) {
           Start talking
         </button>
       </section>
+
+      {scenarios.length > 0 && (
+        <div className="home-scenarios">
+          <div className="hs-title">Available agents</div>
+          <div className="hs-grid">
+            {scenarios.map((s) => (
+              <div key={s.id} className="hs-card" style={{ "--card-accent": s.accent }}>
+                <span className="hs-emoji">{s.emoji}</span>
+                <div className="hs-meta">
+                  <div className="hs-name">{s.name}</div>
+                  <div className="hs-desc">{s.description}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+     </div>
     </main>
   );
 }
