@@ -29,6 +29,13 @@ jobs:
             cd /root/voice-agent
             git fetch --all --prune
             git reset --hard origin/main
-            docker compose up -d --build --remove-orphans
+            # Self-heal the occasional "network ... not found" recreate race:
+            # if a plain up fails, do a clean down + prune + up (volumes persist).
+            if ! docker compose up -d --build; then
+              echo "compose up failed — clean recreate"
+              docker compose down --remove-orphans || true
+              docker network prune -f || true
+              docker compose up -d --build
+            fi
             docker image prune -f
             docker compose ps
