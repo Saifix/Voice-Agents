@@ -1,0 +1,28 @@
+# Secrets & runtime state
+.env
+.env.*
+Backend/apikey.json
+Backend/config.json
+Backend/usage.json
+
+# Deploy artifacts that may embed secrets — never commit these
+droplet-deploy.sh
+*.tgz
+*.b64
+*.pem
+deploy_key*
+id_ed25519*
+
+# Local-only deploy notes (kept out of the repo)
+DEPLOY.md
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node / Vite
+Frontend/node_modules/
+Frontend/dist/
+npm-debug.log*

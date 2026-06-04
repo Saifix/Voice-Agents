@@ -1,0 +1,11 @@
+# Caddy reverse proxy — terminates HTTPS (automatic Let's Encrypt) and proxies
+# everything (including the /ws WebSocket, handled transparently) to the web app.
+#
+# SITE_ADDRESS comes from .env, e.g.
+#   SITE_ADDRESS=165.22.188.46.sslip.io      (free DNS that maps to your IP)
+#   SITE_ADDRESS=voice.example.com           (your own domain, A record -> IP)
+
+{$SITE_ADDRESS} {
+	encode zstd gzip
+	reverse_proxy web:8000
+}

@@ -1,0 +1,7 @@
+# Normalise all text files to LF in the repo (so files built/run on the Linux
+# droplet are never CRLF). Binary assets are left untouched.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary

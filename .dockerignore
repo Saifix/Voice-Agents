@@ -1,0 +1,14 @@
+# Keep the build context small and avoid copying host-built artifacts
+# (host node_modules are platform-specific and must not leak into the image).
+**/node_modules
+Frontend/dist
+**/__pycache__
+**/*.pyc
+.venv
+venv
+.git
+.gitignore
+Backend/apikey.json
+Backend/config.json
+Backend/usage.json
+*.log

@@ -1,0 +1,68 @@
+# Production stack: db + web (app) + caddy (HTTPS reverse proxy).
+# Run on the droplet with:
+#   docker compose -f docker-compose.prod.yml up -d --build
+#
+# Requires a .env (next to this file) containing:
+#   GEMINI_API_KEY=...
+#   SITE_ADDRESS=165.22.188.46.sslip.io      # or your domain
+#
+# Only ports 80/443 are exposed publicly; the app and database are reachable
+# only inside the compose network.
+
+services:
+  db:
+    image: postgres:16
+    container_name: voiceagent-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: voiceagent
+      POSTGRES_PASSWORD: voiceagent
+      POSTGRES_DB: voiceagent
+    volumes:
+      - voiceagent_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U voiceagent"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: voiceagent-web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://voiceagent:voiceagent@db:5432/voiceagent
+    secrets:
+      - gemini_api_key
+    expose:
+      - "8000"          # internal only — Caddy proxies to it
+
+  caddy:
+    image: caddy:2
+    container_name: voiceagent-caddy
+    restart: unless-stopped
+    depends_on:
+      - web
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data       # persists issued TLS certificates
+      - caddy_config:/config
+
+secrets:
+  gemini_api_key:
+    environment: GEMINI_API_KEY
+
+volumes:
+  voiceagent_pgdata:   # database — survives restarts; only removed with `down -v`
+  caddy_data:
+  caddy_config:
