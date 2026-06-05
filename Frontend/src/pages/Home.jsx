@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import Nav from "../components/Nav.jsx";
 import { Icon, LinkedInIcon } from "../components/icons.jsx";
 import { Reveal } from "../components/Reveal.jsx";
-import {
-  profile, stats, capabilities, work, skills, education, honors,
-} from "../resumeData.js";
+import { profile, stats, abilities, skills, education, honors } from "../resumeData.js";
 
 /* Build two opposing marquee rows from the flat skill list. */
 const allSkills = skills.flatMap((g) => g.items);
@@ -16,19 +14,20 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <main className="portfolio">
-        {/* ---------- Hero ---------- */}
-        <section className="hero">
-          <div className="hero-objects" aria-hidden="true">
-            <span className="orb orb-1" />
-            <span className="orb orb-2" />
-            <span className="orb orb-3" />
-            <span className="hero-ring" />
-            <span className="hero-mesh" />
-          </div>
 
+      {/* ---------- Hero (full-bleed) ---------- */}
+      <section className="hero">
+        <div className="hero-objects" aria-hidden="true">
+          <span className="orb orb-1" />
+          <span className="orb orb-2" />
+          <span className="orb orb-3" />
+          <span className="hero-ring" />
+          <span className="hero-mesh" />
+        </div>
+
+        <div className="hero-content">
           <div className="hero-inner">
-            <p className="eyebrow"><span className="eyebrow-dot" /> {profile.title}</p>
+            <p className="eyebrow">{profile.title}</p>
             <h1 className="hero-name">{profile.name}</h1>
             <p className="hero-tagline">{profile.tagline}</p>
             <p className="hero-summary">{profile.summary}</p>
@@ -58,47 +57,29 @@ export default function Home() {
           </div>
 
           <div className="scroll-cue" aria-hidden="true"><Icon name="arrowDown" size={20} /></div>
-        </section>
+        </div>
+      </section>
 
-        {/* ---------- Capabilities ---------- */}
-        <section className="pf-section">
-          <Reveal><h2 className="pf-h2"><span className="pf-h2-i">01</span> What I build</h2></Reveal>
-          <div className="cap-grid">
-            {capabilities.map((c, i) => (
-              <Reveal key={c.key} delay={i * 90}>
-                <article className="cap-card">
-                  <span className="cap-icon"><Icon name={c.icon} size={26} /></span>
-                  <h3>{c.title}</h3>
-                  <p>{c.blurb}</p>
-                </article>
-              </Reveal>
-            ))}
+      <main className="portfolio">
+        {/* ---------- What I can do (animated) ---------- */}
+        <section className="pf-section abilities">
+          <div className="do-objects" aria-hidden="true">
+            <span className="do-shape s1" />
+            <span className="do-shape s2" />
+            <span className="do-shape s3" />
+            <span className="do-shape s4" />
           </div>
-        </section>
-
-        {/* ---------- Selected work ---------- */}
-        <section className="pf-section">
-          <Reveal><h2 className="pf-h2"><span className="pf-h2-i">02</span> Selected work</h2></Reveal>
-          <div className="work-list">
-            {work.map((w, i) => (
-              <Reveal key={i} delay={60}>
-                <article className="work-card">
-                  <div className="work-index">{String(i + 1).padStart(2, "0")}</div>
-                  <div className="work-body">
-                    <div className="work-head">
-                      <div>
-                        <h3 className="work-role">{w.role}</h3>
-                        <div className="work-context">{w.context}</div>
-                      </div>
-                      <span className="work-period">{w.period}</span>
-                    </div>
-                    <ul className="work-highlights">
-                      {w.highlights.map((h, j) => <li key={j}>{h}</li>)}
-                    </ul>
-                    <div className="work-tags">
-                      {w.tags.map((t) => <span className="wtag" key={t}>{t}</span>)}
-                    </div>
+          <Reveal><h2 className="pf-h2"><span className="pf-h2-i">01</span> What I can do</h2></Reveal>
+          <div className="do-grid">
+            {abilities.map((a, i) => (
+              <Reveal key={a.title} delay={(i % 2) * 70}>
+                <article className="do-card">
+                  <span className="do-icon"><Icon name={a.icon} size={24} /></span>
+                  <div className="do-text">
+                    <h3>{a.title}</h3>
+                    <p>{a.sub}</p>
                   </div>
+                  <span className="do-arrow"><Icon name="arrowRight" size={18} /></span>
                 </article>
               </Reveal>
             ))}
@@ -107,7 +88,7 @@ export default function Home() {
 
         {/* ---------- Toolkit (marquee) ---------- */}
         <section className="pf-section">
-          <Reveal><h2 className="pf-h2"><span className="pf-h2-i">03</span> Toolkit</h2></Reveal>
+          <Reveal><h2 className="pf-h2"><span className="pf-h2-i">02</span> Toolkit</h2></Reveal>
           <div className="marquee">
             {marqueeRows.map((row, r) => (
               <div className="mq-row" key={r}>
@@ -123,7 +104,7 @@ export default function Home() {
         <section className="pf-section pf-two">
           <Reveal>
             <div>
-              <h2 className="pf-h2"><span className="pf-h2-i">04</span> Education</h2>
+              <h2 className="pf-h2"><span className="pf-h2-i">03</span> Education</h2>
               {education.map((e) => (
                 <div className="edu-item" key={e.degree}>
                   <div className="edu-degree">{e.degree}</div>
@@ -135,7 +116,7 @@ export default function Home() {
           </Reveal>
           <Reveal delay={120}>
             <div>
-              <h2 className="pf-h2"><span className="pf-h2-i">05</span> Honors</h2>
+              <h2 className="pf-h2"><span className="pf-h2-i">04</span> Honors</h2>
               <ul className="honors">
                 {honors.map((h, i) => (
                   <li key={i}><Icon name="award" size={18} /> <span>{h}</span></li>

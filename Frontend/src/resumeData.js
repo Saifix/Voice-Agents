@@ -25,69 +25,16 @@ export const stats = [
   { n: "5+", l: "Agents orchestrated" },
 ];
 
-/* High-level "what I build" — drives the capability tiles. */
-export const capabilities = [
-  {
-    key: "voice",
-    icon: "mic",
-    title: "Realtime Voice AI",
-    blurb: "Speech-to-speech agents with sub-300ms latency, tool-calling, retrieval grounding and telephony.",
-  },
-  {
-    key: "agents",
-    icon: "nodes",
-    title: "Multi-Agent Systems",
-    blurb: "Event-driven crews orchestrated with LangGraph, coordinating multi-step real-world workflows.",
-  },
-  {
-    key: "rag",
-    icon: "layers",
-    title: "RAG & Retrieval",
-    blurb: "Grounded answers via dense passage + vectorless reasoning retrieval, tuned end to end.",
-  },
-  {
-    key: "ml",
-    icon: "chart",
-    title: "Production ML",
-    blurb: "Ranking and predictive models shipped with evaluation frameworks and LLMOps pipelines.",
-  },
-];
-
-/* Experience framed by impact + context (no employer names). */
-export const work = [
-  {
-    role: "AI Engineer",
-    context: "Enterprise Field-Service SaaS · ISO 9001",
-    period: "2025 — Present",
-    highlights: [
-      "Shipped a real-time speech-to-speech voice assistant — sub-300ms latency, tool-calling, retrieval grounding and multi-fallback reliability — integrated with telephony, lifting automated call handling ~65%.",
-      "Engineered an event-driven multi-agent system with LangGraph: 5+ specialized agents handling visit confirmation, quote dispatch and live map-based location sharing.",
-      "Deployed an XGBoost ranking model at 95% mean NDCG, lifting job-assignment efficiency 30%.",
-      "Built LLMOps pipelines (Langfuse, Promptfoo) and MCP tool servers for prompt versioning, monitoring and reproducible agent context.",
-    ],
-    tags: ["Realtime Voice", "LangGraph", "Telephony", "XGBoost", "MCP"],
-  },
-  {
-    role: "AI Engineer",
-    context: "E-commerce AI · Early-Stage Startups",
-    period: "2024 — 2025",
-    highlights: [
-      "Architected a multi-agent system across 4 e-commerce workflows, blending vectorless reasoning RAG with dense passage retrieval and inter-agent fallback handling.",
-      "Designed cloud architecture and data flows taking an AI startup from zero to first customer demo.",
-      "Built a bilingual (English/Urdu) agricultural assistant orchestrating a CNN crop-disease classifier, weather analysis and market-price agents.",
-    ],
-    tags: ["RAG", "Dense Retrieval", "LangChain", "CNN", "Cloud Architecture"],
-  },
-  {
-    role: "Software Engineer",
-    context: "Fintech · Predictive Modeling",
-    period: "2022 — 2024",
-    highlights: [
-      "Trained a credit-risk model at 99.57% accuracy (Random Forest + XGBoost, SMOTE), cutting false positives 20% and improving retention 15%.",
-      "Built scalable Python backend services and full-stack POCs, turning analytical prototypes into production-ready systems.",
-    ],
-    tags: ["XGBoost", "SMOTE", "FastAPI", "React", "SHAP"],
-  },
+/* "What I can do" — concrete capabilities, framed as actions (no employers). */
+export const abilities = [
+  { icon: "mic", title: "Built real-time voice agents", sub: "Sub-300ms speech-to-speech with tool-calling & telephony" },
+  { icon: "nodes", title: "Designed multi-agent systems", sub: "Event-driven crews orchestrated with LangGraph" },
+  { icon: "layers", title: "Engineered RAG pipelines", sub: "Dense + vectorless retrieval, grounded and tuned" },
+  { icon: "chart", title: "Shipped production ML", sub: "Ranking & predictive models with evaluation frameworks" },
+  { icon: "cloud", title: "Architected cloud infra", sub: "Azure & AWS services, data flows and deployment" },
+  { icon: "database", title: "Managed databases", sub: "PostgreSQL, vector stores and data pipelines" },
+  { icon: "bolt", title: "Integrated realtime APIs", sub: "Telephony, WebSockets and streaming relays" },
+  { icon: "code", title: "Built full-stack POCs", sub: "FastAPI + React, prototype to production" },
 ];
 
 export const skills = [

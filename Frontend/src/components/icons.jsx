@@ -55,6 +55,18 @@ const ICONS = {
   star: (
     <path d="M12 2c.5 5 1.5 6 8 6.5-6.5.5-7.5 1.5-8 8-.5-6.5-1.5-7.5-8-8 6.5-.5 7.5-1.5 8-6.5Z" />
   ),
+  cloud: (
+    <path d="M7.5 18a4 4 0 0 1-.4-7.97 5.5 5.5 0 0 1 10.68-.6A3.6 3.6 0 0 1 17 18H7.5Z" />
+  ),
+  database: (
+    <>
+      <ellipse cx="12" cy="6" rx="7" ry="3" />
+      <path d="M5 6v12c0 1.66 3.13 3 7 3s7-1.34 7-3V6" />
+      <path d="M5 12c0 1.66 3.13 3 7 3s7-1.34 7-3" />
+    </>
+  ),
+  bolt: <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" />,
+  code: <path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 4l-4 16" />,
 };
 
 export function Icon({ name, size = 24, className = "", strokeWidth = 1.6 }) {

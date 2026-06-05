@@ -34,7 +34,7 @@ export default function Demos() {
       <Nav />
       <main className="portfolio">
         <section className="pf-section demos-head">
-          <p className="eyebrow"><span className="eyebrow-dot" /> Interactive showcases</p>
+          <p className="eyebrow">Interactive showcases</p>
           <h1 className="demos-title">Live Demos</h1>
           <p className="demos-sub">
             Hands-on builds you can try right here. More land as I ship them.
