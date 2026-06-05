@@ -1,18 +1,18 @@
 /* ------------------------------------------------------------------ *
  *  Portfolio content — single source of truth for the homepage.
  *  Edit here to update the site; the Home page renders purely from this.
+ *  (Employer names intentionally omitted — work is framed by impact.)
  * ------------------------------------------------------------------ */
 
 export const profile = {
   name: "Saif-ur-Rehman",
-  title: "Senior AI Engineer · ML & Agentic Systems",
-  tagline: "I take Generative AI systems from prototype to production.",
+  title: "AI Engineer · ML & Agentic Systems",
+  tagline: "I take Generative AI from prototype to production.",
   summary:
-    "AI Engineer with 4 years moving Generative AI systems from prototype to production " +
-    "across RAG pipelines, multi-agent workflows and LLM applications. Enterprise-grade " +
-    "delivery at an ISO 9001–certified SaaS company, supervising large-scale AI projects " +
-    "alongside product, backend and frontend teams — equally at home shipping rapid " +
-    "full-stack POCs and MVPs for stakeholder demos.",
+    "Four years building Generative AI systems that ship — real-time voice agents, " +
+    "multi-agent workflows and RAG pipelines — across enterprise SaaS, e-commerce and " +
+    "fintech. Equally at home architecting production systems and spinning up rapid " +
+    "full-stack POCs for stakeholder demos.",
   location: "Lahore, Pakistan",
   email: "saif_rehman08@yahoo.com",   // change to your preferred public contact
   linkedin: "https://linkedin.com/in/saifix-ai",
@@ -21,44 +21,72 @@ export const profile = {
 export const stats = [
   { n: "4+", l: "Years in AI" },
   { n: "<300ms", l: "Realtime voice latency" },
-  { n: "95%", l: "Mean NDCG (ranking)" },
+  { n: "95%", l: "Mean NDCG ranking" },
   { n: "5+", l: "Agents orchestrated" },
 ];
 
-export const experience = [
+/* High-level "what I build" — drives the capability tiles. */
+export const capabilities = [
+  {
+    key: "voice",
+    icon: "mic",
+    title: "Realtime Voice AI",
+    blurb: "Speech-to-speech agents with sub-300ms latency, tool-calling, retrieval grounding and telephony.",
+  },
+  {
+    key: "agents",
+    icon: "nodes",
+    title: "Multi-Agent Systems",
+    blurb: "Event-driven crews orchestrated with LangGraph, coordinating multi-step real-world workflows.",
+  },
+  {
+    key: "rag",
+    icon: "layers",
+    title: "RAG & Retrieval",
+    blurb: "Grounded answers via dense passage + vectorless reasoning retrieval, tuned end to end.",
+  },
+  {
+    key: "ml",
+    icon: "chart",
+    title: "Production ML",
+    blurb: "Ranking and predictive models shipped with evaluation frameworks and LLMOps pipelines.",
+  },
+];
+
+/* Experience framed by impact + context (no employer names). */
+export const work = [
   {
     role: "AI Engineer",
-    company: "JobLogic",
-    location: "Lahore, Pakistan",
-    period: "Mar 2025 – Present",
-    bullets: [
-      "Shipped a real-time voice assistant on OpenAI's GPT Realtime API (native speech-to-speech) with sub-300ms latency, tool-calling, retrieval grounding and multi-fallback reliability; benchmarked against Gemini 3 Flash and integrated with Twilio, lifting automated call handling by ~65%.",
-      "Engineered an event-driven multi-agent system on Azure Service Bus with LangGraph, orchestrating 5+ specialized agents for engineer-visit confirmation, quote dispatch and live courier/map-based location sharing.",
-      "Built LLMOps pipelines with Langfuse and Promptfoo for prompt versioning, response monitoring and evaluation; configured MCP servers for structured tool access and reproducible agent context.",
-      "Designed and deployed a production XGBoost Ranking model (XGBRanker) at 95% mean NDCG, matching engineers to optimal jobs and lifting assignment efficiency by 30%.",
-      "Authored the HMRC R&D Tax Relief technical narrative (CIRD81900 / CIRD81960) to the competent-professional standard; submission accepted by HMRC, securing R&D tax relief for the company.",
+    context: "Enterprise Field-Service SaaS · ISO 9001",
+    period: "2025 — Present",
+    highlights: [
+      "Shipped a real-time speech-to-speech voice assistant — sub-300ms latency, tool-calling, retrieval grounding and multi-fallback reliability — integrated with telephony, lifting automated call handling ~65%.",
+      "Engineered an event-driven multi-agent system with LangGraph: 5+ specialized agents handling visit confirmation, quote dispatch and live map-based location sharing.",
+      "Deployed an XGBoost ranking model at 95% mean NDCG, lifting job-assignment efficiency 30%.",
+      "Built LLMOps pipelines (Langfuse, Promptfoo) and MCP tool servers for prompt versioning, monitoring and reproducible agent context.",
     ],
+    tags: ["Realtime Voice", "LangGraph", "Telephony", "XGBoost", "MCP"],
   },
   {
     role: "AI Engineer",
-    company: "Logiqon Solutions",
-    location: "Remote",
-    period: "Apr 2024 – Mar 2025",
-    bullets: [
-      "Architected a multi-agent AI system covering 4 e-commerce workflows (query resolution, order placement, tracking, issue resolution) combining vectorless reasoning-based RAG with dense passage retrieval, tuned chunking/embedding strategies and inter-agent fallback handling.",
-      "Designed software architecture and cloud infrastructure for an early-stage AI startup, scoping services, data flows and deployment topology from zero to first customer demo.",
-      "Developed F.A.R.M., a Generative AI agricultural assistant orchestrating 3 specialized agents — a CNN-based crop-disease classifier, weather analysis and market-price monitoring — with bilingual (English/Urdu) voice over domain-specific embeddings.",
+    context: "E-commerce AI · Early-Stage Startups",
+    period: "2024 — 2025",
+    highlights: [
+      "Architected a multi-agent system across 4 e-commerce workflows, blending vectorless reasoning RAG with dense passage retrieval and inter-agent fallback handling.",
+      "Designed cloud architecture and data flows taking an AI startup from zero to first customer demo.",
+      "Built a bilingual (English/Urdu) agricultural assistant orchestrating a CNN crop-disease classifier, weather analysis and market-price agents.",
     ],
+    tags: ["RAG", "Dense Retrieval", "LangChain", "CNN", "Cloud Architecture"],
   },
   {
     role: "Software Engineer",
-    company: "Acumen Technologies",
-    location: "Rawalpindi, Pakistan",
-    period: "Jun 2022 – Mar 2024",
-    bullets: [
-      "Trained a credit-risk predictive model at 99.57% accuracy (Random Forest + XGBoost); addressed class imbalance with SMOTE, engineered income-stability scores, reduced false positives by 20% and improved retention by 15%.",
-      "Built scalable Python backend services and full-stack POCs with React frontends, converting analytical prototypes into production-ready systems for client validation.",
+    context: "Fintech · Predictive Modeling",
+    period: "2022 — 2024",
+    highlights: [
+      "Trained a credit-risk model at 99.57% accuracy (Random Forest + XGBoost, SMOTE), cutting false positives 20% and improving retention 15%.",
+      "Built scalable Python backend services and full-stack POCs, turning analytical prototypes into production-ready systems.",
     ],
+    tags: ["XGBoost", "SMOTE", "FastAPI", "React", "SHAP"],
   },
 ];
 
@@ -82,15 +110,14 @@ export const skills = [
     group: "Cloud & Infra",
     items: [
       "Azure AI Search", "Azure Service Bus", "Azure AI Foundry", "Databricks",
-      "AWS Bedrock", "AWS SageMaker", "AWS Canvas",
+      "AWS Bedrock", "AWS SageMaker",
     ],
   },
   {
     group: "LLMOps & ML",
     items: [
-      "Langfuse", "Promptfoo", "Prompt Versioning", "Evaluation Frameworks",
-      "TensorFlow", "PyTorch", "Scikit-learn", "XGBoost", "Prophet",
-      "BG/NBD", "SHAP", "Pandas", "NumPy",
+      "Langfuse", "Promptfoo", "Evaluation Frameworks", "TensorFlow", "PyTorch",
+      "Scikit-learn", "XGBoost", "Prophet", "SHAP", "Pandas", "NumPy",
     ],
   },
 ];
@@ -99,12 +126,12 @@ export const education = [
   {
     degree: "MS Artificial Intelligence",
     school: "Lahore University of Management Sciences (LUMS)",
-    period: "Sep 2024 – Jul 2026",
+    period: "2024 — 2026",
   },
   {
     degree: "BS Computer Science",
     school: "Air University, Islamabad",
-    period: "Sep 2018 – Jul 2022",
+    period: "2018 — 2022",
   },
 ];
 
