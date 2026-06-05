@@ -20,9 +20,6 @@ export const profile = {
 
 export const stats = [
   { n: "4+", l: "Years in AI" },
-  { n: "<300ms", l: "Realtime voice latency" },
-  { n: "95%", l: "Mean NDCG ranking" },
-  { n: "5+", l: "Agents orchestrated" },
 ];
 
 /* "What I can do" — concrete capabilities, framed as actions (no employers). */

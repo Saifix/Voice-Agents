@@ -79,7 +79,6 @@ export default function Home() {
                     <h3>{a.title}</h3>
                     <p>{a.sub}</p>
                   </div>
-                  <span className="do-arrow"><Icon name="arrowRight" size={18} /></span>
                 </article>
               </Reveal>
             ))}
