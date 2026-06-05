@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Gate from "./components/Gate.jsx";
-import ScenarioPicker from "./components/ScenarioPicker.jsx";
-import CallView from "./components/CallView.jsx";
+import Nav from "../components/Nav.jsx";
+import Gate from "../components/Gate.jsx";
+import ScenarioPicker from "../components/ScenarioPicker.jsx";
+import CallView from "../components/CallView.jsx";
 
-export default function App() {
+/* The voice-agent demo flow: collect profile -> pick a persona -> live call.
+ * (Previously the app root; now nested under /demos/voice-agent.) */
+export default function VoiceAgent() {
   const [step, setStep] = useState("gate");   // gate | pick | call
   const [user, setUser] = useState(null);      // { name, email, phone, country_code }
   const [scenario, setScenario] = useState(null);
@@ -19,16 +22,18 @@ export default function App() {
 
   return (
     <>
-      <header className="topbar">
-        <div className="brand"><span className="dot" /> Demo Voice Agents by Saif</div>
-        <Link to="/admin">Admin</Link>
-      </header>
+      {step !== "call" && <Nav />}
 
       {step === "gate" && (
-        <Gate
-          scenarios={scenarios}
-          onStart={(u) => { setUser(u); setStep("pick"); }}
-        />
+        <>
+          <div className="demo-back">
+            <Link to="/demos" className="back-link">← All demos</Link>
+          </div>
+          <Gate
+            scenarios={scenarios}
+            onStart={(u) => { setUser(u); setStep("pick"); }}
+          />
+        </>
       )}
 
       {step === "pick" && (
